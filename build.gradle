@@ -1,0 +1,15 @@
+// Top-level build file
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Gradle 8.4+ bilan ishlash uchun AGP 8.1.0 yoki yuqoriroq kerak
+        classpath 'com.android.tools.build:gradle:8.1.1'
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
