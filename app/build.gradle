@@ -3,23 +3,24 @@ plugins {
 }
 
 android {
-    namespace 'com.eko27.app' // Gradle 8 da bu majburiy
-    compileSdk 35             // Play Market uchun eng so'nggi talab
+    namespace 'com.eko27.app' // Bu kodda qolaversin, zarari yo'q
+    compileSdk 35
 
     defaultConfig {
-        applicationId "com.eko27.app"
-        minSdk 24             // Android 7.0 va yuqorisi uchun
-        targetSdk 35          // Play Market talabi
-        versionCode 2         // Versiya kodi (har yangilanishda oshiring)
-        versionName "1.1"
+        // DIQQAT: ID o'zgartirildi! Endi Google buni YANGI ilova deb qabul qiladi.
+        applicationId "com.eko27.uz" 
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    // GITHUB ACTIONS UCHUN IMZOLASH SOZLAMALARI
+    // GitHub Actions orqali imzolash sozlamalari
     signingConfigs {
         release {
-            // Agar keystore fayli bor bo'lsa (GitHub yaratadi), uni ishlatadi
+            // GitHub Actions o'zi yaratadigan kalit fayli
             def keystoreFile = file("release.jks")
             if (keystoreFile.exists()) {
                 storeFile keystoreFile
@@ -27,34 +28,31 @@ android {
                 keyAlias System.getenv("KEY_ALIAS")
                 keyPassword System.getenv("KEY_PASSWORD")
             } else {
-                // Agar lokal kompyuterda bo'lsangiz va kalit bo'lmasa, xato bermaslik uchun
-                println "Release keystore topilmadi, imzolash o'tkazib yuboriladi."
+                println "Ogohlantirish: release.jks topilmadi, imzolash o'tkazib yuboriladi."
             }
         }
     }
 
     buildTypes {
         release {
-            minifyEnabled true // Kodni ixchamlashtirish (xavfsizlik uchun)
+            minifyEnabled true // Kodni ixchamlashtirish
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release // Yuqoridagi imzolashni qo'llash
+            signingConfig signingConfigs.release // Imzolashni yoqish
         }
     }
 
     compileOptions {
-        // SDK 35 uchun Java 17 tavsiya qilinadi
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
 }
 
 dependencies {
-    // Kutubxonalar yangilandi (eskilari SDK 35 bilan xato berishi mumkin)
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
+
